@@ -28,7 +28,7 @@ Sub Copy_To_Another_Sheet_1(MyArr, inputDatasheet)
         If NewSh Is Nothing Then
             Worksheets.Add(After:=Worksheets(1)).Name = SearchedValue
         End If
-        With Sheets(inputDatasheet).Range("A1:Z5000")
+        With Sheets(inputDatasheet).Range("A1:AH10000")
 
         Rcount = 0
 
@@ -50,7 +50,7 @@ Sub Copy_To_Another_Sheet_1(MyArr, inputDatasheet)
                         Rcount = Rcount + 1
                         'MsgBox Rng.Row
                         RngRow = Rng.Row
-                        Worksheets("Sheet1").Range("A" & RngRow & ":Z" & RngRow).Copy Destination:=Worksheets(SearchedValue).Range("A" & Rcount)
+                        Worksheets(inputDatasheet).Range("A" & RngRow & ":AH" & RngRow).Copy Destination:=Worksheets(SearchedValue).Range("A" & Rcount)
                         'Rng.Copy NewSh.Range("A" & Rcount)
     
                         ' Use this if you only want to copy the value
