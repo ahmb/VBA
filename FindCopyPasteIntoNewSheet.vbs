@@ -5,7 +5,7 @@ Sub Copy_To_Another_Sheet_1(MyArr, inputDatasheet)
     Dim Rcount As Long
     Dim I As Long
     Dim NewSh As Worksheet
-
+    
     With Application
         .ScreenUpdating = False
         .EnableEvents = False
@@ -28,7 +28,7 @@ Sub Copy_To_Another_Sheet_1(MyArr, inputDatasheet)
         If NewSh Is Nothing Then
             Worksheets.Add(After:=Worksheets(1)).Name = SearchedValue
         End If
-        With Sheets(inputDatasheet).Range("A1:AH10000")
+        With Sheets(inputDatasheet).Range("A1:AG10000")
 
         Rcount = 0
 
@@ -83,9 +83,11 @@ Sub Button1_Click()
     'inputData = ("baxter,petri")
     Terms = Split(inputData, ",")
     'MsgBox Terms
-    inputDatasheet = Application.InputBox("Example:" & dq & "Sheet1" & dq, "Enter the name of the sheet you want to search in", Type:=2)
+    inputDatasheet = Application.InputBox("Example:" & dq & "Sheet1" & dq, "Enter the name of the sheet you want to search in", Default:="issue_listing", Type:=2)
     Call Copy_To_Another_Sheet_1(Terms, inputDatasheet)
 
 
 End Sub
+
+
 
