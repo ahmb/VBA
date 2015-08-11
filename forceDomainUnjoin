@@ -1,0 +1,10 @@
+' this wscript can be used to forcefully unjoin a domain :
+
+
+Set objNetwork = CreateObject("WScript.Network") 
+strComputer = objNetwork.ComputerName 
+wscript.echo "strComputer:", strComputer
+Set objComputer = GetObject("winmgmts:{impersonationLevel=Impersonate}!\\" & strComputer & "\root\cimv2:Win32_ComputerSystem.Name='" & strComputer & "'") 
+strDomain = objComputer.Domain 
+wscript.echo "strDomain:", strDomain
+intReturn = objComputer.UnjoinDomainOrWorkgroup (NULL,NULL,0) 
