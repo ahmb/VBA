@@ -1,0 +1,43 @@
+COMMANDS (modified slightly to exclude encrypted files)
+=========================================================
+ >> Step#1: Copy all files minus encrypted ones over to their respective directories
+robocopy \\<EXISTINGSERVER>\g$\data\ \\<TEMPORARYSERVER>\g$\data\ /S /E /ZB /R:3 /W:3 /V /TS /FP /TEE /LOG+:c:\temp\RC01MinusEncryptedFiles.txt /COPY:DAT /XA:E /ETA
+  
+>> Step#2: This is the command to copy over all the encrypted files to their respective directories, however because of the weirdness of file permissions when it comes to encrypted files this may fail
+robocopy \\<EXISTINGSERVER>\data\ \\<TEMPORARYSERVER>\data\ /S /E /ZB /R:3 /W:3 /V /TS /FP /TEE /LOG+:c:\temp\RC01EncryptedFiles.txt /COPY:DAT /IA:E /ETA
+
+
+EXPLANATION:
+================================================================
+
+robocopy \\<EXISTINGSERVER>\g$\data\ \\<TEMPORARYSERVER>\g$\data\ 
+/S - Copy Subdirs 
+/E - Copy Subdirs of Subdirs
+/COPY:DAT - file properties  ( see File Attributes , [RASHCNETO])
+/Z  : Copies files in restartable mode (that is, restarts the copy process from the point of failure).
+/B : Backup mode, has more access than Z but not as stable
+/R:3 - Number of retries
+/W:3 - Wait in between retries in seconds
+ 
+ #### OPTIONS ADDED ########
+/L: Lists files without copying, deleting, or applying a time stamp to any files.
+/TEE Displays output in the console window, in addition to directing it to the log file specified by /LOG or /LOG+.
+/LOG+: :file Redirects output to the specified file, appending it to the file if it already exists.
+/V: Produces verbose output (including skipped files).
+/IA:[RASHCNETO] : Include files with any of the given Attributes
+/XA:[RASHCNETO] : eXclude files with any of the given Attributes
+/ETA Shows estimated time of completion for copied files.
+INSTEAD OF /Z:
+/ZB Tries to copy files in restartable mode, but if that fails with an “Access Denied” error, switches automatically to backup mode which has less failure 
+ 
+ ###File Attributes [RASHCNETO]
+
+ R – Read only 
+ A – Archive 
+ S – System 
+ H – Hidden
+ C – Compressed 
+ N – Not content indexed
+ E – Encrypted 
+ T – Temporary
+ O - Offline  
